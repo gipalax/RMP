@@ -1,0 +1,1124 @@
+//Задачи 1-20 на языке Kotlin
+fun main() {
+    // Задача 1: Четное или нечетное число
+    println("Задача 1")
+    print("Введите число: ")
+    val num1 = readLine()?.toIntOrNull()
+    if (num1 != null) {
+        println(if (num1 % 2 == 0) "Четное" else "Нечетное")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 2: Минимальное из трех чисел
+    println("Задача 2")
+    print("Введите три числа через пробел: ")
+    val nums2 = readLine()?.split(" ")?.mapNotNull { it.toIntOrNull() }
+    if (nums2 != null && nums2.size == 3) {
+        println("Минимальное число: ${nums2.minOrNull()}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 3: Таблица умножения
+    println("Задача 3")
+    for (i in 1..10) {
+        println("5 * $i = ${5 * i}")
+    }
+    println()
+
+    // Задача 4: Сумма чисел от 1 до N
+    println("Задача 4")
+    print("Введите число N: ")
+    val n4 = readLine()?.toIntOrNull()
+    if (n4 != null && n4 >= 1) {
+        println("Сумма: ${(1..n4).sum()}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 5: Число Фибоначчи
+    println("Задача 5")
+    print("Введите число N: ")
+    val n5 = readLine()?.toIntOrNull()
+    if (n5 != null && n5 > 0) {
+        val fib = mutableListOf(0, 1)
+        while (fib.size < n5) {
+            fib.add(fib[fib.size - 1] + fib[fib.size - 2])
+        }
+        println("Первые $n5 чисел Фибоначчи: ${fib.take(n5)}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 6: Проверка простого числа
+    println("Задача 6")
+    print("Введите число: ")
+    val num6 = readLine()?.toIntOrNull()
+    if (num6 != null && num6 > 1) {
+        val isPrime = (2 until num6).all { num6 % it != 0 }
+        println(if (isPrime) "Простое" else "Не простое")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 7: Обратный порядок чисел
+    println("Задача 7")
+    print("Введите число N: ")
+    val n7 = readLine()?.toIntOrNull()
+    if (n7 != null && n7 > 0) {
+        println((n7 downTo 1).joinToString(" "))
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 8: Сумма четных чисел
+    println("Задача 8")
+    print("Введите два числа A и B через пробел: ")
+    val nums8 = readLine()?.split(" ")?.mapNotNull { it.toIntOrNull() }
+    if (nums8 != null && nums8.size == 2) {
+        val (a, b) = nums8
+        println("Сумма четных чисел: ${(a..b).filter { it % 2 == 0 }.sum()}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 9: Реверс строки
+    println("Задача 9")
+    print("Введите строку: ")
+    val str9 = readLine()
+    if (str9 != null) {
+        println("Реверс: ${str9.reversed()}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 10: Количество цифр в числе
+    println("Задача 10")
+    print("Введите число: ")
+    val num10 = readLine()?.toIntOrNull()
+    if (num10 != null) {
+        println("Количество цифр: ${num10.toString().length}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 11: Факториал числа
+    println("Задача 11")
+    print("Введите число N: ")
+    val n11 = readLine()?.toIntOrNull()
+    if (n11 != null && n11 >= 0) {
+        println("Факториал: ${(1..n11).fold(1) { acc, i -> acc * i }}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 12: Сумма цифр числа
+    println("Задача 12")
+    print("Введите число: ")
+    val num12 = readLine()?.toIntOrNull()
+    if (num12 != null) {
+        println("Сумма цифр: ${num12.toString().map { it.digitToInt() }.sum()}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 13: Палиндром
+    println("Задача 13")
+    print("Введите строку: ")
+    val str13 = readLine()
+    if (str13 != null) {
+        println(if (str13 == str13.reversed()) "Палиндром" else "Не палиндром")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 14: Найти максимальное число в массиве
+    println("Задача 14")
+    print("Введите размер массива и элементы через пробел: ")
+    val nums14 = readLine()?.split(" ")?.mapNotNull { it.toIntOrNull() }
+    if (nums14 != null && nums14.isNotEmpty()) {
+        println("Максимальное число: ${nums14.maxOrNull()}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 15: Сумма всех элементов массива
+    println("Задача 15")
+    if (nums14 != null && nums14.isNotEmpty()) {
+        println("Сумма элементов: ${nums14.sum()}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 16: Количество положительных и отрицательных чисел
+    println("Задача 16")
+    if (nums14 != null && nums14.isNotEmpty()) {
+        val positives = nums14.count { it > 0 }
+        val negatives = nums14.count { it < 0 }
+        println("Положительных чисел: $positives, Отрицательных чисел: $negatives")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 17: Простые числа в диапазоне
+    println("Задача 17")
+    print("Введите два числа A и B через пробел: ")
+    val nums17 = readLine()?.split(" ")?.mapNotNull { it.toIntOrNull() }
+    if (nums17 != null && nums17.size == 2) {
+        val (a, b) = nums17
+        println("Простые числа: ${(a..b).filter { n -> (2 until n).all { n % it != 0 } }}")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+
+    // Задача 18: Подсчет гласных и согласных в строке
+    println("Задача 18")
+    print("Введите строку: ")
+    val input18 = readLine()?.lowercase() ?: ""
+    val vowels = "aeiouаеёиоуыэюя"
+    val consonants = "bcdfghjklmnpqrstvwxyzбвгджзйклмнпрстфхцчшщ"
+    val vowelsCount = input18.count { it in vowels }
+    val consonantsCount = input18.count { it in consonants }
+    println("Гласные: $vowelsCount, Согласные: $consonantsCount")
+    println()
+
+// Задача 19: Перестановка слов в строке
+    println("Задача 19")
+    print("Введите строку: ")
+    val input19 = readLine() ?: ""
+    val reversedWords = input19.split(" ").reversed().joinToString(" ")
+    println("Слова в обратном порядке: $reversedWords")
+    println()
+
+// Задача 20: Число Армстронга
+    println("Задача 20")
+    print("Введите число: ")
+    val num20 = readLine()?.toIntOrNull()
+    if (num20 != null) {
+        val digits = num20.toString().map { it.digitToInt() }
+        val armstrongSum = digits.sumOf { Math.pow(it.toDouble(), digits.size.toDouble()).toInt() }
+        println(if (armstrongSum == num20) "Число Армстронга" else "Не является числом Армстронга")
+    } else {
+        println("Некорректный ввод")
+    }
+    println()
+}
+//Задачи 20-40 на языке Dart---------------------------------------------------------------------
+import 'dart:math';
+
+void main() {
+  try {
+    // 1. Функция для нахождения максимума
+    print("1. Максимум: ${task1(10, 20)}");
+
+    // 2. Калькулятор деления
+    print("2. Деление: ${task2(10, 2)}");
+
+    // 3. Конвертер строк в числа
+    print("3. Конвертация строки в число: ${task3('42')}");
+
+    // 4. Проверка возраста
+    print("4. Проверка возраста: ${task4(25)}");
+
+    // 5. Нахождение корня
+    print("5. Корень: ${task5(16)}");
+
+    // 6. Факториал
+    print("6. Факториал: ${task6(5)}");
+
+    // 7. Проверка массива на нули
+    print("7. Проверка массива на нули: ${task7([1, 2, 3, 4])}");
+
+    // 8. Калькулятор возведения в степень
+    print("8. Возведение в степень: ${task8(2, 3)}");
+
+    // 9. Обрезка строки
+    print("9. Обрезка строки: ${task9('Hello, Dart!', 5)}");
+
+    // 10. Поиск элемента в массиве
+    print("10. Поиск в массиве: ${task10([1, 2, 3, 4, 5], 3)}");
+
+    // 11. Конвертация в двоичную систему
+    print("11. Двоичная система: ${task11(10)}");
+
+    // 12. Проверка делимости
+    print("12. Проверка делимости: ${task12(10, 2)}");
+
+    // 13. Чтение элемента списка
+    print("13. Чтение элемента списка: ${task13([1, 2, 3], 1)}");
+
+    // 14. Парольная проверка
+    print("14. Проверка пароля: ${task14('mypassword')}");
+
+    // 15. Проверка даты
+    print("15. Проверка даты: ${task15('12.01.2025')}");
+
+    // 16. Конкатенация строк
+    print("16. Конкатенация строк: ${task16('Hello', 'World')}");
+
+    // 17. Остаток от деления
+    print("17. Остаток от деления: ${task17(10, 3)}");
+
+    // 18. Квадратный корень
+    print("18. Квадратный корень: ${task18(25)}");
+
+    // 19. Конвертер температуры
+    print("19. Конвертация температуры: ${task19(-273)}");
+
+    // 20. Проверка строки на пустоту
+    print("20. Проверка строки на пустоту: ${task20('аа')}");
+  } catch (e) {
+    print("Ошибка: $e");
+  }
+}
+
+// 1. Функция для нахождения максимума
+int task1(int a, int b) {
+  if (a == b) throw Exception('Числа равны!');
+  return a > b ? a : b;
+}
+
+// 2. Калькулятор деления
+double task2(int a, int b) {
+  if (b == 0) throw Exception('Деление на ноль невозможно!');
+  return a / b;
+}
+
+// 3. Конвертер строк в числа
+int task3(String str) {
+  return int.parse(str);
+}
+
+// 4. Проверка возраста
+int task4(int age) {
+  if (age < 0 || age > 150) throw Exception('Некорректный возраст!');
+  return age;
+}
+
+// 5. Нахождение корня
+double task5(double number) {
+  if (number < 0) throw Exception('Корень из отрицательного числа недопустим!');
+  return sqrt(number);
+}
+
+// 6. Факториал
+int task6(int n) {
+  if (n < 0) throw Exception('Факториал отрицательного числа невозможен!');
+  if (n == 0) return 1;
+  return n * task6(n - 1);
+}
+
+// 7. Проверка массива на нули
+bool task7(List<int> arr) {
+  if (arr.contains(0)) throw Exception('Массив содержит нули!');
+  return true;
+}
+
+// 8. Калькулятор возведения в степень
+double task8(double base, int exponent) {
+  if (exponent < 0) throw Exception('Отрицательная степень не поддерживается!');
+  return pow(base, exponent).toDouble();
+}
+
+// 9. Обрезка строки
+String task9(String str, int length) {
+  if (length > str.length) throw Exception('Длина больше длины строки!');
+  return str.substring(0, length);
+}
+
+// 10. Поиск элемента в массиве
+int task10(List<int> arr, int element) {
+  if (!arr.contains(element)) throw Exception('Элемент не найден!');
+  return arr.indexOf(element);
+}
+
+// 11. Конвертация в двоичную систему
+String task11(int number) {
+  if (number < 0) throw Exception('Отрицательные числа не поддерживаются!');
+  return number.toRadixString(2);
+}
+
+// 12. Проверка делимости
+bool task12(int a, int b) {
+  if (b == 0) throw Exception('Деление на ноль!');
+  return a % b == 0;
+}
+
+// 13. Чтение элемента списка
+int task13(List<int> arr, int index) {
+  if (index < 0 || index >= arr.length) throw Exception('Индекс вне диапазона!');
+  return arr[index];
+}
+
+// 14. Парольная проверка
+bool task14(String password) {
+  if (password.length < 8) throw Exception('Пароль слишком короткий!');
+  return true;
+}
+
+// 15. Проверка даты
+bool task15(String date) {
+  final regex = RegExp(r'^\d{2}\.\d{2}\.\d{4}$');
+  if (!regex.hasMatch(date)) throw Exception('Некорректный формат даты!');
+  return true;
+}
+
+// 16. Конкатенация строк
+String task16(String? str1, String? str2) {
+  if (str1 == null || str2 == null) throw Exception('Одна из строк равна null!');
+  return '$str1 $str2';
+}
+
+// 17. Остаток от деления
+int task17(int a, int b) {
+  if (b == 0) throw Exception('Деление на ноль!');
+  return a % b;
+}
+
+// 18. Квадратный корень
+double task18(double number) {
+  if (number < 0) throw Exception('Отрицательные числа не поддерживаются!');
+  return sqrt(number);
+}
+
+// 19. Конвертер температуры
+double task19(double celsius) {
+  if (celsius < -273.15) throw Exception('Температура ниже абсолютного нуля!');
+  return celsius * 9 / 5 + 32;
+}
+
+// 20. Проверка строки на пустоту
+bool task20(String? str) {
+  if (str == null || str.isEmpty) throw Exception('Строка пуста или null!');
+  return true;
+}
+//Задачи 40-60 на языке Java---------------------------------------------------------------------
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        task1();
+        task2();
+        task3();
+        task4();
+        task5();
+        task6();
+        task7();
+        task8();
+        task9();
+        task10();
+        task11();
+        task12();
+        task13();
+        task14();
+        task15();
+        task16();
+        task17();
+        task18();
+        task19();
+        task20();
+    }
+
+    // 1. Класс "Человек"
+    public static void task1() {
+        class Person {
+            private String name;
+            private int age;
+            private String gender;
+
+            public Person(String name, int age, String gender) {
+                this.name = name;
+                this.age = age;
+                this.gender = gender;
+            }
+
+            public void printInfo() {
+                System.out.println("Name: " + name + ", Age: " + age + ", Gender: " + gender);
+            }
+
+            public void increaseAge() {
+                age++;
+            }
+
+            public void changeName(String newName) {
+                name = newName;
+            }
+        }
+
+        Person person = new Person("Alice", 25, "Female");
+        person.printInfo();
+        person.increaseAge();
+        person.changeName("Alice Johnson");
+        person.printInfo();
+    }
+
+    // 2. Наследование: Класс "Работник" и "Менеджер"
+    public static void task2() {
+        class Person {
+            protected String name;
+            protected int age;
+
+            public Person(String name, int age) {
+                this.name = name;
+                this.age = age;
+            }
+        }
+
+        class Worker extends Person {
+            private double salary;
+
+            public Worker(String name, int age, double salary) {
+                super(name, age);
+                this.salary = salary;
+            }
+
+            public double getSalary() {
+                return salary;
+            }
+        }
+
+        class Manager extends Worker {
+            private List<Worker> subordinates;
+
+            public Manager(String name, int age, double salary) {
+                super(name, age, salary);
+                this.subordinates = new ArrayList<>();
+            }
+
+            public void addSubordinate(Worker worker) {
+                subordinates.add(worker);
+            }
+
+            public void printSubordinates() {
+                System.out.println("Subordinates of " + name + ":");
+                for (Worker worker : subordinates) {
+                    System.out.println("- " + worker.name);
+                }
+            }
+        }
+
+        Manager manager = new Manager("Bob", 40, 100000);
+        Worker worker1 = new Worker("Alice", 30, 50000);
+        Worker worker2 = new Worker("John", 25, 40000);
+
+        manager.addSubordinate(worker1);
+        manager.addSubordinate(worker2);
+        manager.printSubordinates();
+    }
+
+    // 3. Полиморфизм: Животные
+    public static void task3() {
+        interface Animal {
+            void makeSound();
+        }
+
+        class Dog implements Animal {
+            public void makeSound() {
+                System.out.println("Woof!");
+            }
+        }
+
+        class Cat implements Animal {
+            public void makeSound() {
+                System.out.println("Meow!");
+            }
+        }
+
+        class Cow implements Animal {
+            public void makeSound() {
+                System.out.println("Moo!");
+            }
+        }
+
+        Animal[] animals = {new Dog(), new Cat(), new Cow()};
+        for (Animal animal : animals) {
+            animal.makeSound();
+        }
+    }
+
+    // 4. Абстрактный класс "Транспорт"
+    public static void task4() {
+        abstract class Transport {
+            public abstract void move();
+        }
+
+        class Car extends Transport {
+            public void move() {
+                System.out.println("The car drives on the road.");
+            }
+        }
+
+        class Bike extends Transport {
+            public void move() {
+                System.out.println("The bike rides on the path.");
+            }
+        }
+
+        Transport car = new Car();
+        Transport bike = new Bike();
+        car.move();
+        bike.move();
+    }
+
+    // 5. Класс "Книга" и "Библиотека"
+    public static void task5() {
+        class Book {
+            private String title;
+            private String author;
+            private int year;
+
+            public Book(String title, String author, int year) {
+                this.title = title;
+                this.author = author;
+                this.year = year;
+            }
+
+            public String getAuthor() {
+                return author;
+            }
+
+            public int getYear() {
+                return year;
+            }
+
+            @Override
+            public String toString() {
+                return "Book{" + "title='" + title + '\'' + ", author='" + author + '\'' + ", year=" + year + '}';
+            }
+        }
+
+        class Library {
+            private List<Book> books = new ArrayList<>();
+
+            public void addBook(Book book) {
+                books.add(book);
+            }
+
+            public List<Book> findByAuthor(String author) {
+                List<Book> result = new ArrayList<>();
+                for (Book book : books) {
+                    if (book.getAuthor().equalsIgnoreCase(author)) {
+                        result.add(book);
+                    }
+                }
+                return result;
+            }
+
+            public List<Book> findByYear(int year) {
+                List<Book> result = new ArrayList<>();
+                for (Book book : books) {
+                    if (book.getYear() == year) {
+                        result.add(book);
+                    }
+                }
+                return result;
+            }
+        }
+
+        Library library = new Library();
+        library.addBook(new Book("Book A", "Author A", 2000));
+        library.addBook(new Book("Book B", "Author A", 2001));
+        library.addBook(new Book("Book C", "Author B", 2002));
+
+        System.out.println("Books by Author A: " + library.findByAuthor("Author A"));
+        System.out.println("Books from 2001: " + library.findByYear(2001));
+    }
+
+    // 6. Класс "Магазин" с товарами
+    public static void task6() {
+        class Product {
+            private String name;
+            private double price;
+
+            public Product(String name, double price) {
+                this.name = name;
+                this.price = price;
+            }
+
+            @Override
+            public String toString() {
+                return name + " - $" + price;
+            }
+        }
+
+        class Store {
+            private List<Product> products = new ArrayList<>();
+
+            public void addProduct(Product product) {
+                products.add(product);
+            }
+
+            public void listProducts() {
+                System.out.println("Products in the store:");
+                for (Product product : products) {
+                    System.out.println(product);
+                }
+            }
+        }
+
+        Store store = new Store();
+        store.addProduct(new Product("Milk", 1.5));
+        store.addProduct(new Product("Bread", 0.8));
+        store.addProduct(new Product("Cheese", 3.2));
+        store.listProducts();
+    }
+
+    // 7. Класс "Университет" и "Студенты"
+    public static void task7() {
+        class Student {
+            private String name;
+            private double gpa;
+
+            public Student(String name, double gpa) {
+                this.name = name;
+                this.gpa = gpa;
+            }
+
+            public double getGpa() {
+                return gpa;
+            }
+
+            @Override
+            public String toString() {
+                return name + " (GPA: " + gpa + ")";
+            }
+        }
+
+        class University {
+            private List<Student> students = new ArrayList<>();
+
+            public void addStudent(Student student) {
+                students.add(student);
+            }
+
+            public void listTopStudents() {
+                System.out.println("Top students:");
+                for (Student student : students) {
+                    if (student.getGpa() > 3.5) {
+                        System.out.println(student);
+                    }
+                }
+            }
+        }
+
+        University university = new University();
+        university.addStudent(new Student("Alice", 3.9));
+        university.addStudent(new Student("Bob", 2.8));
+        university.addStudent(new Student("Charlie", 3.6));
+        university.listTopStudents();
+    }
+
+    // 8. Класс "Клиент банка" с транзакциями
+    public static void task8() {
+        class BankAccount {
+            private String owner;
+            private double balance;
+
+            public BankAccount(String owner, double balance) {
+                this.owner = owner;
+                this.balance = balance;
+            }
+
+            public void deposit(double amount) {
+                balance += amount;
+                System.out.println(owner + " deposited $" + amount + ". New balance: $" + balance);
+            }
+
+            public void withdraw(double amount) {
+                if (amount > balance) {
+                    System.out.println(owner + " has insufficient funds for withdrawal.");
+                } else {
+                    balance -= amount;
+                    System.out.println(owner + " withdrew $" + amount + ". New balance: $" + balance);
+                }
+            }
+        }
+
+        BankAccount account = new BankAccount("John", 1000);
+        account.deposit(500);
+        account.withdraw(200);
+        account.withdraw(1500);
+    }
+
+    // 9. Класс "Автомобиль" с расходом топлива
+    public static void task9() {
+        class Car {
+            private String model;
+            private double fuelConsumption; // liters per 100 km
+
+            public Car(String model, double fuelConsumption) {
+                this.model = model;
+                this.fuelConsumption = fuelConsumption;
+            }
+
+            public double calculateFuel(double distance) {
+                return (fuelConsumption / 100) * distance;
+            }
+
+            @Override
+            public String toString() {
+                return model + " (Fuel consumption: " + fuelConsumption + " L/100 km)";
+            }
+        }
+
+        Car car = new Car("Toyota Camry", 8.5);
+        double distance = 200; // Example distance in km
+        System.out.println(car + " will use " + car.calculateFuel(distance) + " liters of fuel for " + distance + " km.");
+    }
+
+    // 10. Класс "Калькулятор"
+    public static void task10() {
+        class Calculator {
+            public int add(int a, int b) {
+                return a + b;
+            }
+
+            public int subtract(int a, int b) {
+                return a - b;
+            }
+
+            public int multiply(int a, int b) {
+                return a * b;
+            }
+
+            public double divide(int a, int b) {
+                if (b == 0) {
+                    throw new ArithmeticException("Division by zero is not allowed.");
+                }
+                return (double) a / b;
+            }
+        }
+
+        Calculator calculator = new Calculator();
+        System.out.println("10 + 5 = " + calculator.add(10, 5));
+        System.out.println("10 - 5 = " + calculator.subtract(10, 5));
+        System.out.println("10 * 5 = " + calculator.multiply(10, 5));
+        System.out.println("10 / 5 = " + calculator.divide(10, 5));
+    }
+
+    // 11. Класс "Книга" с оценками читателей
+    public static void task11() {
+        class Book {
+            private String title;
+            private List<Integer> ratings = new ArrayList<>();
+
+            public Book(String title) {
+                this.title = title;
+            }
+
+            public void addRating(int rating) {
+                if (rating >= 1 && rating <= 5) {
+                    ratings.add(rating);
+                } else {
+                    System.out.println("Rating must be between 1 and 5.");
+                }
+            }
+
+            public double getAverageRating() {
+                if (ratings.isEmpty()) {
+                    return 0;
+                }
+                int sum = 0;
+                for (int rating : ratings) {
+                    sum += rating;
+                }
+                return (double) sum / ratings.size();
+            }
+
+            @Override
+            public String toString() {
+                return title + " (Average rating: " + getAverageRating() + ")";
+            }
+        }
+
+        Book book = new Book("Java Programming");
+        book.addRating(5);
+        book.addRating(4);
+        book.addRating(3);
+        System.out.println(book);
+    }
+
+    // 12. Класс "Пользователь" с логином и паролем
+    public static void task12() {
+        class User {
+            private String username;
+            private String password;
+
+            public User(String username, String password) {
+                this.username = username;
+                this.password = password;
+            }
+
+            public boolean login(String username, String password) {
+                return this.username.equals(username) && this.password.equals(password);
+            }
+        }
+
+        User user = new User("admin", "12345");
+        System.out.println("Login successful: " + user.login("admin", "12345"));
+        System.out.println("Login successful: " + user.login("admin", "wrong_password"));
+    }
+
+    // 13. Класс "Фильм" с просмотром и рейтингами
+    public static void task13() {
+        class Movie {
+            private String title;
+            private int views;
+            private double rating;
+
+            public Movie(String title) {
+                this.title = title;
+                this.views = 0;
+                this.rating = 0;
+            }
+
+            public void watch() {
+                views++;
+            }
+
+            public void rate(double rating) {
+                if (rating >= 1 && rating <= 10) {
+                    this.rating = (this.rating * views + rating) / (views + 1);
+                } else {
+                    System.out.println("Rating must be between 1 and 10.");
+                }
+            }
+
+            @Override
+            public String toString() {
+                return title + " (Views: " + views + ", Rating: " + rating + ")";
+            }
+        }
+
+        Movie movie = new Movie("Inception");
+        movie.watch();
+        movie.rate(9);
+        movie.watch();
+        movie.rate(8);
+        System.out.println(movie);
+    }
+
+    // 14. Класс "Сотрудник" с зарплатой
+    public static void task14() {
+        class Employee {
+            private String name;
+            private double salary;
+
+            public Employee(String name, double salary) {
+                this.name = name;
+                this.salary = salary;
+            }
+
+            public void increaseSalary(double percent) {
+                salary += salary * percent / 100;
+            }
+
+            @Override
+            public String toString() {
+                return name + " (Salary: $" + salary + ")";
+            }
+        }
+
+        Employee employee = new Employee("John Doe", 50000);
+        employee.increaseSalary(10);
+        System.out.println(employee);
+    }
+
+    // 15. Класс "Погода" с прогнозами
+    public static void task15() {
+        class Weather {
+            private String city;
+            private Map<String, Double> forecasts = new HashMap<>();
+
+            public Weather(String city) {
+                this.city = city;
+            }
+
+            public void addForecast(String day, double temperature) {
+                forecasts.put(day, temperature);
+            }
+
+            public void printForecasts() {
+                System.out.println("Weather forecast for " + city + ":");
+                for (Map.Entry<String, Double> entry : forecasts.entrySet()) {
+                    System.out.println(entry.getKey() + ": " + entry.getValue() + "°C");
+                }
+            }
+        }
+
+        Weather weather = new Weather("Moscow");
+        weather.addForecast("Monday", -5.0);
+        weather.addForecast("Tuesday", -3.0);
+        weather.addForecast("Wednesday", -8.0);
+        weather.printForecasts();
+    }
+
+    // 16. Класс "Прямоугольник" с расчетом площади и периметра
+    public static void task16() {
+        class Rectangle {
+            private double length;
+            private double width;
+
+            public Rectangle(double length, double width) {
+                this.length = length;
+                this.width = width;
+            }
+
+            public double getArea() {
+                return length * width;
+            }
+
+            public double getPerimeter() {
+                return 2 * (length + width);
+            }
+
+            @Override
+            public String toString() {
+                return "Rectangle (Length: " + length + ", Width: " + width +
+                        ", Area: " + getArea() + ", Perimeter: " + getPerimeter() + ")";
+            }
+        }
+
+        Rectangle rectangle = new Rectangle(5.0, 3.0);
+        System.out.println(rectangle);
+    }
+
+    // 17. Класс "Мобильное устройство" с расчетом времени работы
+    public static void task17() {
+        class MobileDevice {
+            private String brand;
+            private int batteryCapacity; // in mAh
+            private int powerConsumption; // in mAh per hour
+
+            public MobileDevice(String brand, int batteryCapacity, int powerConsumption) {
+                this.brand = brand;
+                this.batteryCapacity = batteryCapacity;
+                this.powerConsumption = powerConsumption;
+            }
+
+            public double getOperatingTime() {
+                return (double) batteryCapacity / powerConsumption;
+            }
+
+            @Override
+            public String toString() {
+                return brand + " (Battery: " + batteryCapacity + "mAh, Operating Time: " +
+                        String.format("%.2f", getOperatingTime()) + " hours)";
+            }
+        }
+
+        MobileDevice device = new MobileDevice("Samsung", 4000, 500);
+        System.out.println(device);
+    }
+
+    // 18. Класс "Точка" с расчетом расстояния до другой точки
+    public static void task18() {
+        class Point {
+            private double x;
+            private double y;
+
+            public Point(double x, double y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            public double distanceTo(Point other) {
+                return Math.sqrt(Math.pow(other.x - x, 2) + Math.pow(other.y - y, 2));
+            }
+
+            @Override
+            public String toString() {
+                return "(" + x + ", " + y + ")";
+            }
+        }
+
+        Point point1 = new Point(0, 0);
+        Point point2 = new Point(3, 4);
+        System.out.println("Distance between " + point1 + " and " + point2 + ": " +
+                point1.distanceTo(point2));
+    }
+
+    // 19. Класс "Автомобиль" с расчетом затрат на поездку
+    public static void task19() {
+        class Car {
+            private String model;
+            private double fuelConsumption; // liters per 100 km
+            private double fuelPrice; // price per liter
+
+            public Car(String model, double fuelConsumption, double fuelPrice) {
+                this.model = model;
+                this.fuelConsumption = fuelConsumption;
+                this.fuelPrice = fuelPrice;
+            }
+
+            public double calculateTripCost(double distance) {
+                return (distance / 100) * fuelConsumption * fuelPrice;
+            }
+
+            @Override
+            public String toString() {
+                return model + " (Fuel Consumption: " + fuelConsumption +
+                        "L/100km, Fuel Price: $" + fuelPrice + ")";
+            }
+        }
+
+        Car car = new Car("Toyota", 8.5, 1.2);
+        double tripDistance = 200; // in kilometers
+        System.out.println(car);
+        System.out.println("Cost for " + tripDistance + " km trip: $" +
+                String.format("%.2f", car.calculateTripCost(tripDistance)));
+    }
+
+    // 20. Класс "Игровой персонаж" с навыками
+    public static void task20() {
+        class GameCharacter {
+            private String name;
+            private int level;
+            private Map<String, Integer> skills = new HashMap<>();
+
+            public GameCharacter(String name, int level) {
+                this.name = name;
+                this.level = level;
+            }
+
+            public void addSkill(String skill, int power) {
+                skills.put(skill, power);
+            }
+
+            public void levelUp() {
+                level++;
+                System.out.println(name + " leveled up to " + level + "!");
+            }
+
+            public void printSkills() {
+                System.out.println(name + "'s Skills:");
+                for (Map.Entry<String, Integer> entry : skills.entrySet()) {
+                    System.out.println(entry.getKey() + ": " + entry.getValue() + " power");
+                }
+            }
+        }
+
+        GameCharacter character = new GameCharacter("Archer", 1);
+        character.addSkill("Bow Shooting", 50);
+        character.addSkill("Stealth", 40);
+        character.levelUp();
+        character.printSkills();
+    }
+}
