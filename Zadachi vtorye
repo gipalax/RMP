@@ -1,0 +1,502 @@
+//Задачи DateTime
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
+import java.util.Random;
+
+public class DateTimeTasks {
+
+    public static void main(String[] args) {
+        // 1. Основы LocalDate и LocalTime
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+        System.out.println("Current date and time: " + currentDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + " " +
+                currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+
+        // 2. Сравнение дат
+        LocalDate date1 = LocalDate.of(2025, 1, 1);
+        LocalDate date2 = LocalDate.of(2025, 12, 31);
+        System.out.println(compareDates(date1, date2));
+
+        // 3. Сколько дней до Нового года?
+        System.out.println("Days until New Year: " + daysUntilNewYear());
+
+        // 4. Проверка високосного года
+        int year = 2024;
+        System.out.println("Is year " + year + " leap? " + isLeapYear(year));
+
+        // 5. Подсчет выходных за месяц
+        System.out.println("Weekends in January 2025: " + countWeekends(1, 2025));
+
+        // 6. Расчет времени выполнения метода
+        measureExecutionTime(() -> {
+            for (int i = 0; i < 1_000_000; i++);
+        });
+
+        // 7. Форматирование и парсинг даты
+        String dateString = "28-01-2025";
+        System.out.println("Date after 10 days: " + formatAndParseDate(dateString));
+
+        // 8. Конвертация между часовыми поясами
+        ZonedDateTime utcTime = ZonedDateTime.now(ZoneId.of("UTC"));
+        System.out.println("Time in Moscow: " + convertToTimeZone(utcTime, ZoneId.of("Europe/Moscow")));
+
+        // 9. Вычисление возраста по дате рождения
+        LocalDate birthDate = LocalDate.of(2000, 5, 20);
+        System.out.println("Age: " + calculateAge(birthDate));
+
+        // 10. Создание календаря на месяц
+        printMonthCalendar(1, 2025);
+
+        // 11. Генерация случайной даты в диапазоне
+        LocalDate randomDate = generateRandomDate(LocalDate.of(2025, 1, 1), LocalDate.of(2025, 12, 31));
+        System.out.println("Random date: " + randomDate);
+
+        // 12. Расчет времени до заданной даты
+        LocalDateTime eventDateTime = LocalDateTime.of(2025, 12, 31, 23, 59);
+        System.out.println("Time until event: " + timeUntil(eventDateTime));
+
+        // 13. Вычисление количества рабочих часов
+        LocalDateTime start = LocalDateTime.of(2025, 1, 28, 9, 0);
+        LocalDateTime end = LocalDateTime.of(2025, 1, 28, 17, 0);
+        System.out.println("Working hours: " + calculateWorkingHours(start, end));
+
+        // 14. Конвертация даты в строку с учетом локали
+        System.out.println("Date in Russian: " + formatDateWithLocale(LocalDate.now(), new Locale("ru")));
+
+        // 15. Определение дня недели по дате
+        System.out.println("Day of the week: " + getDayOfWeekInRussian(LocalDate.of(2025, 1, 28)));
+    }
+
+    // 2
+    public static String compareDates(LocalDate date1, LocalDate date2) {
+        if (date1.isBefore(date2)) return "Date1 is before Date2";
+        if (date1.isAfter(date2)) return "Date1 is after Date2";
+        return "Dates are equal";
+    }
+
+    // 3
+    public static long daysUntilNewYear() {
+        LocalDate newYear = LocalDate.of(LocalDate.now().getYear() + 1, 1, 1);
+        return ChronoUnit.DAYS.between(LocalDate.now(), newYear);
+    }
+
+    // 4
+    public static boolean isLeapYear(int year) {
+        return Year.of(year).isLeap();
+    }
+
+    // 5
+    public static int countWeekends(int month, int year) {
+        int weekends = 0;
+        LocalDate date = LocalDate.of(year, month, 1);
+        while (date.getMonthValue() == month) {
+            if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                weekends++;
+            }
+            date = date.plusDays(1);
+        }
+        return weekends;
+    }
+
+    // 6
+    public static void measureExecutionTime(Runnable method) {
+        long start = System.nanoTime();
+        method.run();
+        long end = System.nanoTime();
+        System.out.println("Execution time: " + (end - start) / 1_000_000 + " ms");
+    }
+
+    // 7
+    public static String formatAndParseDate(String date) {
+        LocalDate parsedDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        return parsedDate.plusDays(10).format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
+
+    // 8
+    public static ZonedDateTime convertToTimeZone(ZonedDateTime dateTime, ZoneId zoneId) {
+        return dateTime.withZoneSameInstant(zoneId);
+    }
+
+    // 9
+    public static int calculateAge(LocalDate birthDate) {
+        return Period.between(birthDate, LocalDate.now()).getYears();
+    }
+
+    // 10
+    public static void printMonthCalendar(int month, int year) {
+        LocalDate date = LocalDate.of(year, month, 1);
+        while (date.getMonthValue() == month) {
+            System.out.println(date + " - " + (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY ? "Weekend" : "Workday"));
+            date = date.plusDays(1);
+        }
+    }
+
+    // 11
+    public static LocalDate generateRandomDate(LocalDate start, LocalDate end) {
+        long days = ChronoUnit.DAYS.between(start, end);
+        return start.plusDays(new Random().nextInt((int) days + 1));
+    }
+
+    // 12
+    public static String timeUntil(LocalDateTime event) {
+        Duration duration = Duration.between(LocalDateTime.now(), event);
+        return duration.toHours() + " hours, " + (duration.toMinutes() % 60) + " minutes, " + (duration.getSeconds() % 60) + " seconds";
+    }
+
+    // 13
+    public static long calculateWorkingHours(LocalDateTime start, LocalDateTime end) {
+        return ChronoUnit.HOURS.between(start, end);
+    }
+
+    // 14
+    public static String formatDateWithLocale(LocalDate date, Locale locale) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy", locale);
+        return date.format(formatter);
+    }
+
+    // 15
+    public static String getDayOfWeekInRussian(LocalDate date) {
+        return date.getDayOfWeek().getDisplayName(java.time.format.TextStyle.FULL, new Locale("ru"));
+    }
+}
+
+
+//Задачи Singleton Enum
+
+// Задача 1. Singleton для подключения к базе данных
+public class DatabaseConnection {
+    private static DatabaseConnection instance;
+
+    // Приватный конструктор
+    private DatabaseConnection() {
+        System.out.println("Подключение к базе данных создано.");
+    }
+
+    // Метод для получения единственного экземпляра
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
+    }
+
+    // Метод для демонстрации работы подключения
+    public void connect() {
+        System.out.println("Успешное подключение к базе данных!");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        DatabaseConnection db1 = DatabaseConnection.getInstance();
+        db1.connect();
+
+        DatabaseConnection db2 = DatabaseConnection.getInstance();
+        System.out.println(db1 == db2); // true (проверяем, что объект один и тот же)
+    }
+}
+
+// Задача 2. Singleton для логирования
+import java.util.ArrayList;
+import java.util.List;
+
+public class Logger {
+    private static Logger instance;
+    private List<String> logs = new ArrayList<>();
+
+    // Приватный конструктор
+    private Logger() {}
+
+    // Метод для получения единственного экземпляра
+    public static synchronized Logger getInstance() {
+        if (instance == null) {
+            instance = new Logger();
+        }
+        return instance;
+    }
+
+    // Добавление сообщения в логи
+    public void log(String message) {
+        logs.add(message);
+        System.out.println("Лог добавлен: " + message);
+    }
+
+    // Вывод всех логов
+    public void showLogs() {
+        System.out.println("Все логи:");
+        for (String log : logs) {
+            System.out.println(log);
+        }
+    }
+}
+
+class MainLogger {
+    public static void main(String[] args) {
+        Logger logger1 = Logger.getInstance();
+        logger1.log("Первое сообщение");
+        logger1.log("Второе сообщение");
+
+        Logger logger2 = Logger.getInstance();
+        logger2.showLogs();
+
+        System.out.println(logger1 == logger2); // true (объект один и тот же)
+    }
+}
+
+// Задача 3. Реализация статусов заказа
+enum OrderStatus {
+    NEW, IN_PROGRESS, DELIVERED, CANCELLED
+}
+
+class Order {
+    private int orderId;
+    private OrderStatus status;
+
+    public Order(int orderId) {
+        this.orderId = orderId;
+        this.status = OrderStatus.NEW;
+    }
+
+    public void setStatus(OrderStatus newStatus) {
+        if (status == OrderStatus.DELIVERED && newStatus == OrderStatus.CANCELLED) {
+            System.out.println("Нельзя отменить доставленный заказ!");
+            return;
+        }
+        System.out.println("Статус изменен с " + status + " на " + newStatus);
+        this.status = newStatus;
+    }
+
+    public void showStatus() {
+        System.out.println("Текущий статус заказа #" + orderId + ": " + status);
+    }
+}
+
+class MainOrder {
+    public static void main(String[] args) {
+        Order order = new Order(1);
+        order.showStatus();
+
+        order.setStatus(OrderStatus.IN_PROGRESS);
+        order.showStatus();
+
+        order.setStatus(OrderStatus.DELIVERED);
+        order.showStatus();
+
+        order.setStatus(OrderStatus.CANCELLED); // Не сработает, т.к. заказ уже доставлен
+    }
+}
+
+// Задача 4. Сезоны года
+enum Season {
+    WINTER, SPRING, SUMMER, AUTUMN
+}
+
+class SeasonTranslator {
+    public static String getSeasonName(Season season) {
+        switch (season) {
+            case WINTER:
+                return "Зима";
+            case SPRING:
+                return "Весна";
+            case SUMMER:
+                return "Лето";
+            case AUTUMN:
+                return "Осень";
+            default:
+                throw new IllegalArgumentException("Неизвестный сезон: " + season);
+        }
+    }
+}
+
+class MainSeason {
+    public static void main(String[] args) {
+        System.out.println(SeasonTranslator.getSeasonName(Season.WINTER)); // Зима
+        System.out.println(SeasonTranslator.getSeasonName(Season.SPRING)); // Весна
+    }
+}
+
+
+//Задачи Потоки, Декоратор, Io NiO
+
+//Задача 1: Работа с потоками ввода-вывода
+import java.io.*;
+
+public class IOExample {
+    public static void main(String[] args) {
+        String inputFile = "input.txt";
+        String outputFile = "output.txt";
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+             
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line.toUpperCase());
+                writer.newLine();
+            }
+            System.out.println("Файл успешно обработан.");
+        } catch (IOException e) {
+            System.err.println("Ошибка при работе с файлами: " + e.getMessage());
+        }
+    }
+}
+
+
+//Задача 2: Реализация паттерна Декоратор
+interface TextProcessor {
+    String process(String text);
+}
+
+class SimpleTextProcessor implements TextProcessor {
+    @Override
+    public String process(String text) {
+        return text;
+    }
+}
+
+class UpperCaseDecorator implements TextProcessor {
+    private final TextProcessor processor;
+
+    public UpperCaseDecorator(TextProcessor processor) {
+        this.processor = processor;
+    }
+
+    @Override
+    public String process(String text) {
+        return processor.process(text).toUpperCase();
+    }
+}
+
+class TrimDecorator implements TextProcessor {
+    private final TextProcessor processor;
+
+    public TrimDecorator(TextProcessor processor) {
+        this.processor = processor;
+    }
+
+    @Override
+    public String process(String text) {
+        return processor.process(text).trim();
+    }
+}
+
+class ReplaceDecorator implements TextProcessor {
+    private final TextProcessor processor;
+
+    public ReplaceDecorator(TextProcessor processor) {
+        this.processor = processor;
+    }
+
+    @Override
+    public String process(String text) {
+        return processor.process(text).replace(" ", "_");
+    }
+}
+
+public class DecoratorExample {
+    public static void main(String[] args) {
+        TextProcessor processor = new ReplaceDecorator(
+            new UpperCaseDecorator(
+                new TrimDecorator(new SimpleTextProcessor())
+            )
+        );
+
+        String result = processor.process(" Hello world ");
+        System.out.println(result); // Вывод: HELLO_WORLD
+    }
+}
+
+//Задача 3: Сравнение производительности IO и NIO
+import java.io.*;
+import java.nio.file.*;
+import java.nio.channels.FileChannel;
+
+public class PerformanceComparison {
+    public static void main(String[] args) throws IOException {
+        String inputFile = "large_input.txt";
+        String outputFileIO = "output_io.txt";
+        String outputFileNIO = "output_nio.txt";
+
+        // IO (FileReader, BufferedReader)
+        long startIO = System.currentTimeMillis();
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileIO))) {
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line);
+                writer.newLine();
+            }
+        }
+        long endIO = System.currentTimeMillis();
+        System.out.println("IO время: " + (endIO - startIO) + " ms");
+
+        // NIO (FileChannel)
+        long startNIO = System.currentTimeMillis();
+        try (FileChannel sourceChannel = FileChannel.open(Paths.get(inputFile), StandardOpenOption.READ);
+             FileChannel destChannel = FileChannel.open(Paths.get(outputFileNIO),
+                     StandardOpenOption.WRITE, StandardOpenOption.CREATE)) {
+            sourceChannel.transferTo(0, sourceChannel.size(), destChannel);
+        }
+        long endNIO = System.currentTimeMillis();
+        System.out.println("NIO время: " + (endNIO - startNIO) + " ms");
+    }
+}
+
+
+//Задача 4: Программа с использованием Java NIO
+import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.file.*;
+
+public class FileCopyNIO {
+    public static void main(String[] args) {
+        String source = "source_file.txt";
+        String dest = "dest_file.txt";
+
+        try (FileChannel sourceChannel = FileChannel.open(Paths.get(source), StandardOpenOption.READ);
+             FileChannel destChannel = FileChannel.open(Paths.get(dest), StandardOpenOption.WRITE, StandardOpenOption.CREATE)) {
+
+            sourceChannel.transferTo(0, sourceChannel.size(), destChannel);
+            System.out.println("Файл успешно скопирован.");
+        } catch (IOException e) {
+            System.err.println("Ошибка при копировании файла: " + e.getMessage());
+        }
+    }
+}
+
+//Задача 5: Асинхронное чтение файла с использованием NIO.2
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.AsynchronousFileChannel;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.concurrent.Future;
+
+public class AsyncFileReader {
+    public static void main(String[] args) {
+        String filePath = "async_input.txt";
+
+        try (AsynchronousFileChannel asyncChannel = AsynchronousFileChannel.open(
+                Paths.get(filePath), StandardOpenOption.READ)) {
+
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            Future<Integer> operation = asyncChannel.read(buffer, 0);
+
+            while (!operation.isDone()) {
+                System.out.println("Чтение файла...");
+            }
+
+            buffer.flip();
+            while (buffer.hasRemaining()) {
+                System.out.print((char) buffer.get());
+            }
+            buffer.clear();
+            System.out.println("\nЧтение завершено.");
+        } catch (IOException e) {
+            System.err.println("Ошибка при асинхронном чтении файла: " + e.getMessage());
+        }
+    }
+}
