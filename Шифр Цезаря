@@ -1,0 +1,100 @@
+import java.io.*;
+import java.nio.file.*;
+import java.util.Scanner;
+
+public class CaesarCipher {
+
+    // Метод для шифрования текста
+    public static String encrypt(String text, int shift) {
+        StringBuilder encryptedText = new StringBuilder();
+        for (char c : text.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                c = (char) ((c - base + shift) % 26 + base);
+            }
+            encryptedText.append(c);
+        }
+        return encryptedText.toString();
+    }
+
+    // Метод для расшифровки текста
+    public static String decrypt(String text, int shift) {
+        return encrypt(text, 26 - shift);  // Просто используем сдвиг в обратную сторону
+    }
+
+    // Метод для шифрования файла
+    public static void encryptFile(String inputFilePath, String outputFilePath, int shift) throws IOException {
+        String content = new String(Files.readAllBytes(Paths.get(inputFilePath)));
+        String encryptedText = encrypt(content, shift);
+        Files.write(Paths.get(outputFilePath), encryptedText.getBytes());
+    }
+
+    // Метод для расшифровки файла
+    public static void decryptFile(String inputFilePath, String outputFilePath, int shift) throws IOException {
+        String content = new String(Files.readAllBytes(Paths.get(inputFilePath)));
+        String decryptedText = decrypt(content, shift);
+        Files.write(Paths.get(outputFilePath), decryptedText.getBytes());
+    }
+
+    // Проверка существования файла
+    public static boolean fileExists(String filePath) {
+        return Files.exists(Paths.get(filePath));
+    }
+
+    // Проверка корректности ключа
+    public static boolean isValidShift(int shift) {
+        return shift >= 0 && shift <= 25;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Главное меню
+        System.out.println("Шифр Цезаря");
+        System.out.println("1 - Шифрование текста");
+        System.out.println("2 - Расшифровка текста");
+        System.out.print("Выберите действие (1/2): ");
+        int action = scanner.nextInt();
+        scanner.nextLine();  // consume newline character
+
+        // Ввод файла
+        System.out.print("Введите путь к исходному файлу: ");
+        String inputFilePath = scanner.nextLine();
+
+        // Проверка существования файла
+        if (!fileExists(inputFilePath)) {
+            System.out.println("Ошибка: файл не существует.");
+            return;
+        }
+
+        // Ввод пути для записи результата
+        System.out.print("Введите путь к выходному файлу: ");
+        String outputFilePath = scanner.nextLine();
+
+        // Ввод ключа
+        System.out.print("Введите ключ шифрования (сдвиг от 0 до 25): ");
+        int shift = scanner.nextInt();
+
+        // Проверка ключа
+        if (!isValidShift(shift)) {
+            System.out.println("Ошибка: неверный ключ. Ключ должен быть в пределах от 0 до 25.");
+            return;
+        }
+
+        try {
+            if (action == 1) {
+                // Шифрование
+                encryptFile(inputFilePath, outputFilePath, shift);
+                System.out.println("Шифрование завершено. Результат записан в файл: " + outputFilePath);
+            } else if (action == 2) {
+                // Расшифровка
+                decryptFile(inputFilePath, outputFilePath, shift);
+                System.out.println("Расшифровка завершена. Результат записан в файл: " + outputFilePath);
+            } else {
+                System.out.println("Ошибка: неверный выбор.");
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка при обработке файлов: " + e.getMessage());
+        }
+    }
+}
